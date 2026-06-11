@@ -1,0 +1,51 @@
+{
+  "name": "tailwind-nextjs-boilerplate",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Production-ready Next.js 16 + Tailwind CSS v4 boilerplate (marketing site + MDX blog) for new websites. Deploys to Vercel.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "@headlessui/react": "2.2.10",
+    "@heroicons/react": "2.2.0",
+    "@shikijs/rehype": "4.2.0",
+    "@vercel/analytics": "2.0.1",
+    "@vercel/speed-insights": "2.0.0",
+    "clsx": "2.1.1",
+    "gray-matter": "4.0.3",
+    "next": "16.2.9",
+    "next-mdx-remote": "6.0.0",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "reading-time": "1.5.0",
+    "rehype-autolink-headings": "7.1.0",
+    "rehype-slug": "6.0.0",
+    "resend": "6.12.4",
+    "server-only": "0.0.1",
+    "shiki": "4.2.0",
+    "tailwind-merge": "3.6.0",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.0",
+    "@tailwindcss/typography": "0.5.20",
+    "@types/mdx": "2.0.14",
+    "@types/node": "20.19.9",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.1",
+    "babel-plugin-react-compiler": "1.0.0",
+    "eslint": "9.39.1",
+    "eslint-config-next": "16.2.9",
+    "prettier": "3.8.4",
+    "prettier-plugin-tailwindcss": "0.8.0",
+    "tailwindcss": "4.3.0",
+    "typescript": "5.9.3"
+  }
+}

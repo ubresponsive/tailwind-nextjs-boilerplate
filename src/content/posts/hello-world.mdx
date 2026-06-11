@@ -1,0 +1,49 @@
+---
+title: "Welcome to your new boilerplate"
+description: "A quick tour of what this Next.js and Tailwind starter gives you, and how to make it your own."
+date: "2026-06-11"
+author:
+  name: "The Team"
+  profileUrl: "/about"
+tags:
+  - "Getting started"
+  - "Next.js"
+cover: "/og/hello-world.png"
+coverAlt: "Abstract gradient cover image"
+draft: false
+---
+
+This is an example post written in **MDX**. It demonstrates the blog pipeline: frontmatter is
+validated with Zod at build time, the body is rendered as a Server Component, and code blocks are
+highlighted at build time with Shiki — no client-side highlighter shipped to the browser.
+
+## What's included
+
+- A marketing home page, About and Contact pages
+- A contact form built with a Server Action, Zod validation, and Resend
+- This MDX blog with an index, post pages, RSS feed, and structured data
+- SEO defaults: metadata templates, canonical URLs, sitemap, and robots
+
+## Writing posts
+
+Drop a new `.mdx` file in `src/content/posts/`. The filename becomes the URL slug. Every post needs
+frontmatter — if a required field is missing, the build fails rather than shipping a broken page.
+
+```tsx
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const post = await getPost(slug);
+  if (!post) notFound();
+  return <article>{/* ... */}</article>;
+}
+```
+
+## Make it yours
+
+Edit the brand colours in `src/app/globals.css`, the site details in `src/lib/site.ts`, and start
+composing pages from the [Tailwind Plus catalogue](/about). Replace this post with something that
+shows genuine, firsthand expertise — that's what readers and search engines reward.
