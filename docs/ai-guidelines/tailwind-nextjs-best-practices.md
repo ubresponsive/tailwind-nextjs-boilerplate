@@ -286,12 +286,38 @@ Rules:
 
 ---
 
-## 9. Heroicons
+## 9. Icons (Heroicons primary, Lucide secondary)
+
+Heroicons is the primary set. **Lucide** (`lucide-react`) is a gap filler for icons Heroicons does not cover, visually normalised to match Heroicons. **Font Awesome is prohibited**: never install `@fortawesome/*`, `react-icons`, or any FA fonts/CDN links.
+
+**Selection order — apply on every icon decision:**
+
+1. **Heroicons** from the correct size set first.
+2. **Lucide via the `Icon` wrapper** (stroke 1.5) only when no suitable Heroicon exists.
+3. **Brand/social logos**: local SVG components in `components/ui/logos/` (Simple Icons or licensed assets), `aria-hidden` plus `sr-only` text where linked.
+4. Nothing else. If an icon cannot be found in 1–3, flag it rather than adding a new library.
+
+**Heroicons usage (unchanged):**
 
 - Import per icon from the correct size set: `@heroicons/react/24/outline` (default UI and feature icons), `@heroicons/react/20/solid` (dense UI, buttons, inline), `@heroicons/react/16/solid` (very tight spots). Outline at 24, solid at 20/16; do not render a 24px outline icon at 16px.
 - Size with Tailwind (`size-5`, `size-6`) and colour via `text-*` (icons inherit `currentColor`).
 - Decorative icons get `aria-hidden="true"`; icon only buttons get an `aria-label` or screen reader text (`<span className="sr-only">`).
-- One icon language sitewide per the UX guide; Heroicons only, no mixed icon packs.
+- Render Heroicons directly in JSX. **Do not** retrofit them through the `Icon` wrapper — the wrapper normalises Lucide to Heroicons, not the reverse.
+
+**Lucide usage:**
+
+- Lucide draws at `strokeWidth=2` by default; Heroicons outline is `1.5`. **Always** route Lucide through the single wrapper `components/ui/icon.tsx`, which forces `strokeWidth={1.5}` and sets a11y defaults, so the two sets are indistinguishable side by side.
+- Lucide icons are **never** rendered directly in JSX (`<Forklift />` is a defect). Import by name and pass to the wrapper:
+
+```tsx
+import { Forklift } from 'lucide-react'
+import { Icon } from '@/components/ui/icon'
+
+<Icon icon={Forklift} className="size-5 text-primary-600" />
+```
+
+- Next.js optimises both `lucide-react` and `@heroicons/react` via built-in `optimizePackageImports`, so named imports tree shake correctly — no `modularizeImports` or bundler config needed.
+- Mixing both sets within one component is allowed only if both render the same visual style (outline with outline, solid with solid) at the same size.
 
 ---
 
