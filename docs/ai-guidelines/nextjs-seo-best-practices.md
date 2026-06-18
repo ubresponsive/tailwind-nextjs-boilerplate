@@ -294,7 +294,10 @@ export const metadata: Metadata = {
 };
 ```
 
-- OG images: 1200 x 630px, under 1MB, legible text, brand consistent. Generate dynamic ones per page with `opengraph-image.tsx` and `next/og` (ImageResponse) for blogs and products.
+- OG images: 1200 x 630px, under 1MB, legible text, brand consistent. Use a static
+  `public/og-image.png` as the site default. Generate dynamic images with `opengraph-image.tsx` and
+  `next/og` only for blogs/products that need per-page images, and verify the generated image URL
+  returns `200` in production.
 - Set `og:type` correctly: `article` for posts, `website` otherwise.
 - Test with social debuggers (LinkedIn Post Inspector, Facebook Sharing Debugger) after deploys.
 - Add profile links in `Organization` structured data (`sameAs`) to connect social accounts to the brand entity.

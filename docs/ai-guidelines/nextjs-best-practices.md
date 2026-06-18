@@ -96,7 +96,8 @@ proxy.ts                    # request interception (replaces middleware.ts in v1
 Rules:
 
 - Colocate route specific components inside the route folder; share generic ones from `components/`.
-- Use route groups `(marketing)`, `(blog)` to share layouts without affecting URLs.
+- Keep simple marketing routes flat (`app/about`, `app/contact`). Use route groups such as
+  `(marketing)` or `(blog)` only when a project genuinely needs multiple shared layouts.
 - One root layout with `<html lang="en-AU">` and `<body>`; nested layouts must not repeat them.
 - Add `loading.tsx` (instant loading UI via Suspense) and `error.tsx` (client error boundary) to every data bearing route segment.
 - `middleware.ts` is deprecated. Use `proxy.ts` exporting a `proxy` function for redirects, rewrites, auth gating at the network boundary. Keep it thin; never fetch heavy data there.
@@ -369,7 +370,9 @@ Full detail lives in `nextjs-seo-best-practices.md`. Non negotiables while build
 - `app/sitemap.ts` and `app/robots.ts` file conventions.
 - One `<h1>` per page, correct h2/h3 nesting, semantic landmarks.
 - JSON-LD: `Organization` site wide, `Article` plus `BreadcrumbList` on blog posts.
-- Dynamic Open Graph images via `opengraph-image.tsx` using `ImageResponse` from `next/og`.
+- A static `public/og-image.png` for the default site preview. Use dynamic `opengraph-image.tsx`
+  routes only for content types that need per-page images, and verify the generated image URL returns
+  `200` in production.
 - All indexable content present in server rendered HTML.
 
 ---
@@ -481,7 +484,7 @@ Full detail lives in `nextjs-seo-best-practices.md`. Non negotiables while build
 
 1. Scaffold per Section 1; enable `cacheComponents`, React Compiler, image config with `remotePatterns` and `qualities`.
 2. Build the root layout: `next/font`, `<html lang>`, skip link, header, footer, metadata defaults.
-3. Implement routes with route groups; add `loading.tsx`, `error.tsx`, `not-found.tsx`.
+3. Implement simple routes flat by default; add route groups only for shared layouts; add `loading.tsx`, `error.tsx`, `not-found.tsx`.
 4. Build all pages as Server Components; isolate interactivity into small client leaves.
 5. Implement the blog per Section 13 with `generateStaticParams`, cached and tagged content loaders, RSS feed.
 6. Build all forms with Server Actions, Zod validation, `useActionState`, accessible error handling.

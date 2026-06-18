@@ -46,10 +46,10 @@ secrets — `.env.example` documents every variable.
 - **Marketing pages** — home, about, contact, with a shared header (sticky, accessible mobile drawer)
   and footer.
 - **Contact form** — Server Action + Zod validation + Resend, with accessible inline errors and a
-  honeypot. See `src/app/(marketing)/contact/`.
+  honeypot. See `src/app/contact/`.
 - **MDX blog** — index, post pages (`generateStaticParams`, Article + Breadcrumb JSON-LD), RSS feed
   at `/feed.xml`. Posts live in `src/content/posts/*.mdx` with Zod-validated frontmatter.
-- **SEO layer** — metadata templates + canonicals, `sitemap.ts`, `robots.ts`, dynamic OG image,
+- **SEO layer** — metadata templates + canonicals, `sitemap.ts`, `robots.ts`, static OG image,
   `Organization` JSON-LD, semantic landmarks, and a skip link.
 - **Design system** — brand tokens in `src/app/globals.css`, shared primitives (`Button`,
   `Container`, `Section`, `SectionHeading`), and the `cn()` utility.
@@ -59,17 +59,35 @@ secrets — `.env.example` documents every variable.
 ```
 src/
   app/                 # routes (App Router)
-    (marketing)/       # about, contact (route group — no URL segment)
+    about/             # example marketing subpage
+    contact/           # contact page, form component, Server Action
     blog/              # index + [slug] post pages
     feed.xml/          # RSS route handler
-    layout.tsx page.tsx globals.css sitemap.ts robots.ts opengraph-image.tsx
+    layout.tsx page.tsx globals.css sitemap.ts robots.ts
     not-found.tsx error.tsx loading.tsx
   components/          # ui/ primitives, layout/ header+footer, cta-band, mdx-content
   content/posts/       # MDX blog posts
   lib/                 # utils (cn), site config, env (Zod), posts loader, jsonld
+public/
+  og-image.png         # static 1200x630 social sharing image
 tailwind-plus-catalog/ # 657 Tailwind Plus blocks — reference to copy FROM (build-excluded)
 docs/ai-guidelines/    # the four best-practices guides (read these before building)
 ```
+
+## Production defaults this starter protects
+
+- **Flat starter routes:** example pages live at `src/app/about` and `src/app/contact`. Avoid route
+  groups such as `(marketing)` until a project has multiple route layouts that truly need them.
+- **Static OG image:** social preview metadata points at `public/og-image.png`. Dynamic
+  `opengraph-image.tsx` routes are useful for blogs/products, but must be production-tested because
+  social scrapers only care whether the final image URL returns `200`.
+- **Friendly form errors:** Server Actions preprocess missing `FormData` values before Zod validation
+  so users never see raw messages like `Invalid input: expected string, received undefined`.
+- **Central site config:** `src/lib/site.ts` owns canonical URLs, nav, footer links, contact details,
+  and social links. Set `NEXT_PUBLIC_SITE_URL` before deploy so canonical, OG, sitemap, RSS and
+  JSON-LD URLs are correct.
+- **Asset hygiene:** convert large hero/banner PNGs to WebP or AVIF, keep `og-image.png` at 1200x630,
+  and verify every first-viewport image has a sensible `sizes` value.
 
 ## The Tailwind Plus component catalogue
 
@@ -102,6 +120,9 @@ AI assistants (see [`CLAUDE.md`](CLAUDE.md)):
 - [SEO best practices](docs/ai-guidelines/nextjs-seo-best-practices.md) — metadata, structured data, rendering, Core Web Vitals.
 - [Tailwind v4 best practices](docs/ai-guidelines/tailwind-nextjs-best-practices.md) — CSS-first config, tokens, the catalogue workflow.
 - [UX/UI best practices](docs/ai-guidelines/ux-ui-best-practices.md) — layout, type, colour, components, page templates.
+- [Production checklist](docs/production-checklist.md) — final deploy checks for metadata, forms, assets, and previews.
+- [Asset pipeline](docs/asset-pipeline.md) — image conversion, OG image rules, banner crop checks.
+- [Form validation](docs/form-validation.md) — Zod + Server Action patterns for friendly errors.
 
 ## Deploying to Vercel
 
@@ -110,6 +131,9 @@ AI assistants (see [`CLAUDE.md`](CLAUDE.md)):
 3. Set the environment variables above per environment in the Vercel dashboard.
 4. Recommended: set the function region near your audience (e.g. `syd1`) and add your production
    domain (choose www or apex as canonical, 308-redirect the other).
+
+After deploy, verify social previews with a fresh cache-busted URL such as
+`https://example.com/?v=preview-1`. WhatsApp, Facebook and LinkedIn cache aggressively.
 
 ## Notes
 

@@ -31,7 +31,7 @@ export function Footer() {
               <div>
                 <a
                   className="hover:text-white"
-                  href={`tel:${siteConfig.contact.phone}`}
+                  href={siteConfig.contact.phoneHref}
                 >
                   {siteConfig.contact.phone}
                 </a>

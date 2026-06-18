@@ -8,6 +8,15 @@ const initialState: ContactState = { status: "idle" };
 const fieldClasses =
   "mt-2 block w-full rounded-md border-0 px-3 py-2 text-gray-900 shadow-card ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm";
 
+function FieldError({ id, message }: { id: string; message?: string }) {
+  if (!message) return null;
+  return (
+    <p id={id} role="alert" className="mt-2 text-sm text-red-600">
+      {message}
+    </p>
+  );
+}
+
 export function ContactForm() {
   const [state, formAction, isPending] = useActionState(
     submitContact,
@@ -54,11 +63,7 @@ export function ContactForm() {
           aria-describedby={state.errors?.name ? "name-error" : undefined}
           className={fieldClasses}
         />
-        {state.errors?.name ? (
-          <p id="name-error" role="alert" className="mt-2 text-sm text-red-600">
-            {state.errors.name}
-          </p>
-        ) : null}
+        <FieldError id="name-error" message={state.errors?.name} />
       </div>
 
       <div>
@@ -78,15 +83,7 @@ export function ContactForm() {
           aria-describedby={state.errors?.email ? "email-error" : undefined}
           className={fieldClasses}
         />
-        {state.errors?.email ? (
-          <p
-            id="email-error"
-            role="alert"
-            className="mt-2 text-sm text-red-600"
-          >
-            {state.errors.email}
-          </p>
-        ) : null}
+        <FieldError id="email-error" message={state.errors?.email} />
       </div>
 
       <div>
@@ -105,15 +102,7 @@ export function ContactForm() {
           aria-describedby={state.errors?.message ? "message-error" : undefined}
           className={fieldClasses}
         />
-        {state.errors?.message ? (
-          <p
-            id="message-error"
-            role="alert"
-            className="mt-2 text-sm text-red-600"
-          >
-            {state.errors.message}
-          </p>
-        ) : null}
+        <FieldError id="message-error" message={state.errors?.message} />
       </div>
 
       {/* Honeypot: hidden from users, visible to bots. */}

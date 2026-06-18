@@ -4,16 +4,41 @@ import { Resend } from "resend";
 import { z } from "zod";
 import { getEnv } from "@/lib/env";
 
+const requiredText = (message: string, max: number, maxMessage: string) =>
+  z.preprocess(
+    (value) => (typeof value === "string" ? value : ""),
+    z.string().trim().min(1, message).max(max, maxMessage),
+  );
+
 const contactSchema = z.object({
-  name: z.string().trim().min(1, "Please enter your name").max(100),
-  email: z.email("Enter a valid email address"),
-  message: z
-    .string()
-    .trim()
-    .min(10, "Please add a little more detail")
-    .max(5000),
+  name: requiredText(
+    "Please enter your name",
+    100,
+    "Please keep your name under 100 characters",
+  ),
+  email: z.preprocess(
+    (value) => (typeof value === "string" ? value : ""),
+    z
+      .string()
+      .trim()
+      .min(1, "Please enter your email address")
+      .max(254, "Please keep your email address under 254 characters")
+      .pipe(z.email("Please enter a valid email address")),
+  ),
+  message: z.preprocess(
+    (value) => (typeof value === "string" ? value : ""),
+    z
+      .string()
+      .trim()
+      .min(1, "Please tell us a little about your enquiry")
+      .min(10, "Please add a little more detail")
+      .max(5000, "Please keep your message under 5000 characters"),
+  ),
   // Honeypot field: real users leave this empty; bots tend to fill it.
-  company: z.string().max(0).optional(),
+  company: z.preprocess(
+    (value) => (typeof value === "string" ? value : ""),
+    z.string().max(0),
+  ),
 });
 
 export type ContactState = {

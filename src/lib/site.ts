@@ -52,6 +52,7 @@ export const siteConfig = {
   contact: {
     email: "enquiries@example.com",
     phone: "+61 2 0000 0000",
+    phoneHref: "tel:+61200000000",
     address: "Sydney, NSW, Australia",
   },
 } as const;

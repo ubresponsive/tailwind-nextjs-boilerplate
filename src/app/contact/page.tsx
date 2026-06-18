@@ -60,12 +60,12 @@ export default function ContactPage() {
                   aria-hidden="true"
                 />
                 <dd>
-                  <a
-                    className="hover:text-primary-700 text-gray-700"
-                    href={`tel:${siteConfig.contact.phone}`}
-                  >
-                    {siteConfig.contact.phone}
-                  </a>
+                <a
+                  className="hover:text-primary-700 text-gray-700"
+                  href={siteConfig.contact.phoneHref}
+                >
+                  {siteConfig.contact.phone}
+                </a>
                 </dd>
               </div>
               <div className="flex items-start gap-3">
