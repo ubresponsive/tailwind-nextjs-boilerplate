@@ -116,6 +116,14 @@ This keeps the production CSS small (~10KB gzipped here). Browse it with
 These guides are the authority on how this project is built. They are written for both engineers and
 AI assistants (see [`CLAUDE.md`](CLAUDE.md)):
 
+### Repeated card grids
+
+Repeated cards use equal-height rows by default. Let the grid stretch its children; make each card
+`flex h-full flex-col`, give its variable content area `flex-1`, and anchor the final action, icon row,
+or metadata with `mt-auto` plus deliberate top padding. Repeated image stages need a stable height or
+aspect ratio. Verify action alignment in every desktop/tablet row and allow natural card heights when
+the layout stacks on mobile.
+
 - [Next.js best practices](docs/ai-guidelines/nextjs-best-practices.md) — App Router idioms, caching, Server Actions, images.
 - [SEO best practices](docs/ai-guidelines/nextjs-seo-best-practices.md) — metadata, structured data, rendering, Core Web Vitals.
 - [Tailwind v4 best practices](docs/ai-guidelines/tailwind-nextjs-best-practices.md) — CSS-first config, tokens, the catalogue workflow.

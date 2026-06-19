@@ -47,11 +47,10 @@ After copying blocks, audit for leakage: `grep -rn "indigo" src/` must return no
 - Brand colours & shape tokens: `src/app/globals.css`. Site details & navigation: `src/lib/site.ts`.
 - Shared primitives: `src/components/ui/` (`Button`, `Container`, `Section`, `SectionHeading`). Reuse
   them instead of re-pasting utility strings. Merge classes with `cn()` from `src/lib/utils.ts`.
+- **Repeated card grids use equal-height rows by default.** Let the grid stretch its children; make
+  each card `flex h-full flex-col`, let the variable content area grow with `flex-1`, and anchor the
+  final action, icon row, or metadata with `mt-auto` plus deliberate top padding. Give repeated media
+  stages a stable height or aspect ratio. Verify action alignment in desktop/tablet rows and allow
+  natural card heights when stacked on mobile.
 - Blog posts: `src/content/posts/*.mdx` with Zod-validated frontmatter (`src/lib/posts.ts`).
 - Verify before declaring done: `npm run typecheck`, `npm run lint`, `npm run build`.
-
-## Security & process
-
-This repo inherits the organisation's security boundaries. In short: never disable security controls,
-never hardcode secrets, validate all untrusted input, and treat generated code as a reviewable draft.
-Mark AI-assisted commits/PRs with `[ai-assisted]`.
