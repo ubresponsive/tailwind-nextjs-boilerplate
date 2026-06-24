@@ -1,4 +1,4 @@
-# CLAUDE.md — Project guidance for AI assistants
+# AGENTS.md — Project guidance for AI assistants
 
 This is a **Next.js 16 + Tailwind CSS v4** boilerplate for marketing websites with a blog, deployed
 to Vercel. Before writing code, **read the guides in [`docs/ai-guidelines/`](docs/ai-guidelines/)** —

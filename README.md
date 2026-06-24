@@ -83,6 +83,9 @@ docs/ai-guidelines/    # the four best-practices guides (read these before build
   social scrapers only care whether the final image URL returns `200`.
 - **Friendly form errors:** Server Actions preprocess missing `FormData` values before Zod validation
   so users never see raw messages like `Invalid input: expected string, received undefined`.
+- **Consistent form dropdowns:** all dropdown fields should use
+  `src/components/ui/select-field.tsx`, which removes native browser chevrons, adds the project
+  chevron icon, and keeps focus/error styling consistent.
 - **Central site config:** `src/lib/site.ts` owns canonical URLs, nav, footer links, contact details,
   and social links. Set `NEXT_PUBLIC_SITE_URL` before deploy so canonical, OG, sitemap, RSS and
   JSON-LD URLs are correct.
@@ -114,7 +117,7 @@ This keeps the production CSS small (~10KB gzipped here). Browse it with
 ## Guidelines (read before building)
 
 These guides are the authority on how this project is built. They are written for both engineers and
-AI assistants (see [`CLAUDE.md`](CLAUDE.md)):
+AI assistants (see [`AGENTS.md`](AGENTS.md) and [`CLAUDE.md`](CLAUDE.md)):
 
 ### Repeated card grids
 

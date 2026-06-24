@@ -62,6 +62,9 @@ function FieldError({ id, message }: { id: string; message?: string }) {
 
 ## Dropdowns and Checkboxes
 
+- Use `SelectField` from `src/components/ui/select-field.tsx` for every dropdown. Do not create raw
+  `<select>` elements in form/page components; raw selects can reintroduce the double-chevron/browser
+  chevron issue and drift from shared focus/error styling.
 - Required `<select>` controls should have an empty disabled first option.
 - Server validation should treat an empty selection as a missing value.
 - Checkboxes need a `name` and explicit server validation if they are required.
