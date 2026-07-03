@@ -7,9 +7,17 @@ function getSiteUrl(): string {
   // NEXT_PUBLIC_SITE_URL is the canonical production URL.
   // On Vercel preview deployments, fall back to the per-deploy URL.
   const explicit = process.env.NEXT_PUBLIC_SITE_URL;
-  if (explicit) return explicit.replace(/\/$/, "");
+  if (explicit && !explicit.includes("localhost")) {
+    return explicit.replace(/\/$/, "");
+  }
   const vercel = process.env.NEXT_PUBLIC_VERCEL_URL;
-  if (vercel) return `https://${vercel}`;
+  if (vercel && process.env.VERCEL_ENV !== "production") {
+    return `https://${vercel}`;
+  }
+  if (process.env.NODE_ENV === "production") {
+    return "https://www.example.com";
+  }
+  if (explicit) return explicit.replace(/\/$/, "");
   return "http://localhost:3000";
 }
 

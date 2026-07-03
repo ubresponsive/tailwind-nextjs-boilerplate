@@ -212,6 +212,8 @@ export default function robots(): MetadataRoute.Robots {
 - Include only canonical, indexable, 200 status URLs in the sitemap. No redirects, no noindexed pages, no parameter variants.
 - Keep `lastModified` truthful. Faking freshness is a known negative signal.
 - Submit the sitemap in Google Search Console and monitor Index Coverage.
+- Keep robots.txt to supported directives (`User-agent`, `Allow`, `Disallow`, `Sitemap`). Do not emit `Host`, `Crawl-delay`, or other non-standard fields; Google ignores them and Search Console may warn.
+- Generate sitemap and robots URLs from the chosen canonical production domain. `NEXT_PUBLIC_VERCEL_URL` is only a preview fallback, never a production canonical. Strip trailing slashes from `NEXT_PUBLIC_SITE_URL`.
 - Never `disallow` CSS or JS paths in robots; Google must render the page fully.
 - Use `noindex` (via `robots: { index: false }` in metadata) for thin utility pages: search results, filtered listings, cart, thank you pages.
 
